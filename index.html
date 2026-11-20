@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of Mark Joseph D. Javiña, Information Technologist & IT Professional, Quezon City Government (NTMD)." />
+  <title>Mark Joseph D. Javiña | Information Technologist</title>
+
+  <!-- Apply the saved theme before the page draws (prevents a flash) -->
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('portfolio-theme'); } catch (e) {}
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+    })();
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6.4.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Your styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- ============ SPLASH SCREEN (entry gate) ============ -->
+<div class="splash-overlay" id="splash" hidden>
+
+  <!-- Monochrome spotlight and grid highlight that follow the cursor -->
+  <div class="splash-spotlight" aria-hidden="true"></div>
+  <div class="splash-grid-hi" aria-hidden="true"></div>
+
+  <!-- Floating minimalist nodes -->
+  <div class="splash-nodes" aria-hidden="true">
+    <span class="splash-node"></span>
+    <span class="splash-node"></span>
+    <span class="splash-node"></span>
+    <span class="splash-node"></span>
+    <span class="splash-node"></span>
+  </div>
+
+  <!-- Corner HUD -->
+  <div class="splash-hud splash-hud--tl" aria-hidden="true">
+    <span class="splash-dot"></span> SYS.READY // 14.6760&deg; N, 121.0437&deg; E
+  </div>
+  <div class="splash-topright">
+  <div class="splash-hud splash-hud--tr" aria-hidden="true">STATUS: ONLINE</div>
+  <button type="button" class="theme-toggle splash-theme-toggle" id="splashThemeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+    <i class="fa-solid fa-moon icon-moon"></i>
+    <i class="fa-solid fa-sun icon-sun"></i>
+  </button>
+</div>
+  <div class="splash-hud splash-hud--bl" aria-hidden="true">NODE-01 // NETWORK OPS</div>
+  <div class="splash-hud splash-hud--br" aria-hidden="true">LINK <span class="splash-dot"></span></div>
+
+  <!-- Centre block: tilts with the mouse -->
+  <div class="splash-center" id="splashCenter">
+    <p class="splash-kicker">WELCOME TO</p>
+
+    <h1 class="splash-title" id="splashTitle" aria-label="My Portfolio">
+      <span class="splash-word" aria-hidden="true"><span class="splash-word-inner">MY</span></span>
+      <span class="splash-word splash-word--slash" aria-hidden="true"><span class="splash-word-inner">//</span></span>
+      <span class="splash-word" aria-hidden="true"><span class="splash-word-inner">PORTFOLIO</span></span>
+    </h1>
+
+    <p class="splash-role">Information Technologist &bull; Network Operations &bull; Web Designer</p>
+
+    <div class="splash-enter-wrap" id="splashWrap">
+      <button type="button" class="splash-enter-btn" id="splashEnter">
+        Enter <i class="fa-solid fa-arrow-right splash-arrow"></i>
+      </button>
+    </div>
+  </div>
+</div>
+  <!-- Effects layer -->
+  <div class="page-curtain load" id="pageCurtain"></div>
+  <!-- Ambient cursor glow -->
+<div class="cursor-aura" id="cursorAura" aria-hidden="true"></div> 
+<!-- Circuit-board background (fixed, behind the content sections) -->
+<div class="pcb-bg" aria-hidden="true">
+  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" focusable="false">
+    <defs>
+      <!-- Soft glow: blurred copy underneath, crisp copy on top -->
+      <filter id="pcbGlow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="520" height="400">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="2.6" result="b"/>
+        <feMerge>
+          <feMergeNode in="b"/>
+          <feMergeNode in="b"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <pattern id="pcbTile" width="480" height="360" patternUnits="userSpaceOnUse">
+
+        <!-- ===== Static base tracks (dim) ===== -->
+        <path class="pcb-trace" d="M0 40 H110 L140 70 H330 L360 40 H480"/>
+        <path class="pcb-trace" d="M0 52 H110 L140 82 H330 L360 52 H480"/>
+        <path class="pcb-trace" d="M0 64 H110 L140 94 H330 L360 64 H480"/>
+        <path class="pcb-trace" d="M0 250 H200 L230 220 H400 L430 250 H480"/>
+        <path class="pcb-trace" d="M0 262 H200 L230 232 H400 L430 262 H480"/>
+        <path class="pcb-trace" d="M200 94 V130 L225 155 V192"/>
+        <path class="pcb-trace" d="M300 220 V185 L275 160 V148"/>
+        <path class="pcb-trace" d="M100 250 V215 L80 195 H40"/>
+        <path class="pcb-trace" d="M420 64 V105 L440 125 H452"/>
+        <path class="pcb-trace" d="M374 320 H330 L310 300 V290"/>
+
+        <!-- ===== Glowing layer: pulses + nodes ===== -->
+        <g class="pcb-glow" filter="url(#pcbGlow)">
+
+          <!-- Pulses on the main track bundles (--d = start offset) -->
+          <path class="pcb-pulse" pathLength="100" style="--d:-0.5s" d="M0 40 H110 L140 70 H330 L360 40 H480"/>
+          <path class="pcb-pulse" pathLength="100" style="--d:-3s"   d="M0 52 H110 L140 82 H330 L360 52 H480"/>
+          <path class="pcb-pulse" pathLength="100" style="--d:-5s"   d="M0 64 H110 L140 94 H330 L360 64 H480"/>
+          <path class="pcb-pulse" pathLength="100" style="--d:-1.5s" d="M0 250 H200 L230 220 H400 L430 250 H480"/>
+          <path class="pcb-pulse" pathLength="100" style="--d:-4.2s" d="M0 262 H200 L230 232 H400 L430 262 H480"/>
+
+          <!-- Branch pulses: each one runs from its dot to its ring.
+               The dot and ring use the SAME --d, so they flash in sync. -->
+          <path class="pcb-pulse" pathLength="100" style="--d:0s"    d="M200 94 V130 L225 155 V192"/>
+          <path class="pcb-pulse" pathLength="100" style="--d:-2s"   d="M300 220 V185 L275 160 V148"/>
+          <path class="pcb-pulse" pathLength="100" style="--d:-4s"   d="M100 250 V215 L80 195 H40"/>
+          <path class="pcb-pulse" pathLength="100" style="--d:-1s"   d="M420 64 V105 L440 125 H452"/>
+          <!-- this one is reversed so the pulse also travels dot to ring -->
+          <path class="pcb-pulse" pathLength="100" style="--d:-5.5s" d="M310 290 V300 L330 320 H374"/>
+
+          <!-- Rings (flash when the pulse arrives) -->
+          <circle class="pcb-ring" style="--d:0s"    cx="225" cy="198" r="6"/>
+          <circle class="pcb-ring" style="--d:-2s"   cx="275" cy="142" r="6"/>
+          <circle class="pcb-ring" style="--d:-4s"   cx="34"  cy="195" r="6"/>
+          <circle class="pcb-ring" style="--d:-1s"   cx="458" cy="125" r="6"/>
+          <circle class="pcb-ring" style="--d:-5.5s" cx="380" cy="320" r="6"/>
+
+          <!-- Junction dots (flash when the pulse leaves) -->
+          <circle class="pcb-dot" style="--d:0s"    cx="200" cy="94"  r="3.5"/>
+          <circle class="pcb-dot" style="--d:-2s"   cx="300" cy="220" r="3.5"/>
+          <circle class="pcb-dot" style="--d:-4s"   cx="100" cy="250" r="3.5"/>
+          <circle class="pcb-dot" style="--d:-1s"   cx="420" cy="64"  r="3.5"/>
+          <circle class="pcb-dot" style="--d:-5.5s" cx="310" cy="286" r="3.5"/>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#pcbTile)"/>
+  </svg>
+</div>
+
+  <!-- ============ NAVIGATION ============ -->
+  <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-hidden="true" />
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="logo" aria-label="Back to top">
+        <span class="logo-mark">MJ</span>
+        <span>Mark Javiña</span>
+      </a>
+
+      <div class="nav-right">
+        <nav aria-label="Primary">
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#employment">Employment</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#internship">Internship</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+</nav>
+
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+          <i class="fa-solid fa-moon icon-moon"></i>
+          <i class="fa-solid fa-sun icon-sun"></i>
+        </button>
+
+        <a href="#contact" class="btn btn-nav"><i class="fa-solid fa-paper-plane"></i> Contact Me</a>
+        <label for="menu-toggle" class="menu-btn" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ 1. HERO ============ -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge" data-extrude="badge">
+          <span class="dot"></span>
+          <i class="fa-solid fa-location-dot"></i> Quezon City, Philippines
+        </div>
+
+        <h1>Hi, I'm <span class="grad-text">Mark Joseph Javiña</span></h1>
+
+        <p class="hero-title">
+          <i class="fa-solid fa-microchip"></i>
+          Information Technologist &amp; IT Professional
+        </p>
+
+        <p class="hero-bio">
+          IT professional from Quezon City, specializing in citywide network monitoring,
+          ISP dispatch management, IT asset inventory, and technical support operations.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#employment" class="btn btn-primary">
+            <i class="fa-solid fa-briefcase"></i> View Work
+            <i class="fa-solid fa-arrow-right arrow"></i>
+          </a>
+          <a href="#contact" class="btn btn-ghost">
+            <i class="fa-solid fa-envelope"></i> Contact Me
+          </a>
+          <a href="https://drive.google.com/file/d/1Ep0lR62Xct9htAit2uyT2KOXvuh_LnQV/view?usp=sharing"
+   target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+  <i class="fa-solid fa-lock"></i> Request Resume
+  <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+</a>
+        </div>
+      </div>
+
+      <!-- Animated ASCII / glitch card in the right column -->
+      <figure class="hero-gif">
+        <div class="hero-gif-frame">
+          <img src="cube-animation.gif"
+     alt="Rotating black and white wireframe cube"
+     width="540" height="540"
+     decoding="async" draggable="false" />
+      </figure>
+
+    </div>
+  </section>
+
+   <!-- ============ 2. ABOUT ============ -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"><i class="fa-solid fa-circle-user"></i> About Me</span>
+        <h2>Reliable IT support, paired with clean, modern web design.</h2>
+      </div>
+
+      <div class="reveal">
+        <div class="about-card">
+          <p>
+            I'm an <strong>Information Technologist</strong> from <strong>Batasan Hills, Quezon City</strong>, currently serving under the
+            <strong>Network and Technical Maintenance Division (NTMD)</strong> of the <strong>Quezon City Government</strong>.
+            My day-to-day work covers <strong>citywide network monitoring</strong>, <strong>ISP dispatch management</strong>,
+            <strong>IT asset inventory</strong>, and <strong>technical support operations</strong>, where accuracy,
+            documentation, and dependability matter.
+          </p>
+          <p>
+            Alongside my IT career, I'm a passionate <strong>Web Designer</strong>. I enjoy crafting
+            <strong>clean, modern, and user-friendly websites</strong> with thoughtful <strong>UI/UX</strong>,
+            <strong>responsive layouts</strong>, and <strong>polished visual themes</strong> that look great on every screen.
+            Combining technical know-how with a designer's eye lets me build experiences that are not only
+            functional, but also intuitive and visually refined.
+          </p>
+
+          <div class="about-tags">
+            <span><i class="fa-solid fa-tower-broadcast"></i> Network Monitoring</span>
+            <span><i class="fa-solid fa-headset"></i> ISP Dispatch</span>
+            <span><i class="fa-solid fa-boxes-stacked"></i> Asset Inventory</span>
+            <span><i class="fa-solid fa-screwdriver-wrench"></i> Technical Support</span>
+            <span><i class="fa-solid fa-pen-ruler"></i> Web Design</span>
+            <span><i class="fa-solid fa-object-group"></i> UI/UX</span>
+            <span><i class="fa-solid fa-mobile-screen-button"></i> Responsive Layouts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. EXPERIENCE & SKILLS (ACCORDIONS) ============ -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"><i class="fa-solid fa-layer-group"></i> Experience &amp; Skills</span>
+        <h2>Work &amp; expertise</h2>
+        <p>Select any section below to explore the full details.</p>
+      </div>
+
+      <div class="accordion-stack reveal">
+
+        <!-- Current Employment -->
+        <details class="acc" name="portfolio" id="employment" open>
+          <summary class="acc-summary">
+            <div class="icon-box"><i class="fa-solid fa-user-tie"></i></div>
+            <div class="acc-text">
+              <span class="acc-kicker">Current Employment</span>
+              <h3>Information Technologist</h3>
+              <p class="acc-brief">Technical Support Staff &middot; ITDD &ndash; NTMD, Quezon City Government</p>
+            </div>
+            <span class="acc-toggle"><i class="fa-solid fa-chevron-down"></i></span>
+          </summary>
+
+          <div class="acc-body">
+            <h4><i class="fa-solid fa-id-card"></i> Position Details</h4>
+            <div class="detail-list">
+              <div class="detail-row">
+                <i class="fa-solid fa-user-tie"></i>
+                <div class="detail-body">
+                  <small>Position</small>
+                  
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <i class="fa-solid fa-sitemap"></i>
+                <div class="detail-body">
+                  <small>Department / Office</small>
+                  <strong>Information Technology Development Department (ITDD) &ndash; Network and Technical Maintenance Division (NTMD), Quezon City Government</strong>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <i class="fa-solid fa-location-dot"></i>
+                <div class="detail-body">
+                  <small>Address</small>
+                  <div class="map-row">
+                    <p>5th Floor Quezon City Hall Main Building, Mayaman St, Brgy. Central Diliman, QC</p>
+                    <a class="action-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Quezon+City+Hall+Main+Building" target="_blank" rel="noopener noreferrer">
+                      <i class="fa-solid fa-map-location-dot"></i> Open in Google Maps
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h4><i class="fa-solid fa-list-check"></i> Core Responsibilities</h4>
+            <ul class="duty-grid">
+              <li class="duty">
+                <span class="duty-icon"><i class="fa-solid fa-tower-broadcast"></i></span>
+                <div>
+                  Network &amp; ISP Helpdesk Monitoring
+                  <div class="isp-row">
+                    <span class="isp-chip">PLDT</span>
+                    <span class="isp-chip">Globe</span>
+                    <span class="isp-chip">Radius</span>
+                    <span class="isp-chip">Smart</span>
+                    <span class="isp-chip">Converge</span>
+                  </div>
+                </div>
+              </li>
+              <li class="duty">
+  <span class="duty-icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+  <div>
+    Hardware, Software &amp; Network Diagnostics
+    <span class="duty-sub"> (Resolving technical faults and system issues)</span>
+  </div>
+</li>
+              <li class="duty">
+                <span class="duty-icon"><i class="fa-solid fa-boxes-stacked"></i></span>
+                IT Asset Management (hardware registries, repair logs)
+              </li>
+              <li class="duty">
+                <span class="duty-icon"><i class="fa-solid fa-desktop"></i></span>
+                PC Support Assistance
+              </li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- Previous Internship / OJT -->
+        <details class="acc" name="portfolio" id="internship">
+          <summary class="acc-summary">
+            <div class="icon-box"><i class="fa-solid fa-user-graduate"></i></div>
+            <div class="acc-text">
+              <span class="acc-kicker">Previous Internship / OJT</span>
+              <h3>OJT Trainee</h3>
+              <p class="acc-brief">SETC Computer Parts and Accessories Trading &middot; 600 hours</p>
+            </div>
+            <span class="acc-toggle"><i class="fa-solid fa-chevron-down"></i></span>
+          </summary>
+
+          <div class="acc-body">
+            <div class="hours-banner">
+              <i class="fa-solid fa-clock"></i>
+              <div>
+                <strong>600</strong>
+                <span>Training hours completed</span>
+              </div>
+            </div>
+
+            <h4><i class="fa-solid fa-id-badge"></i> Internship Details</h4>
+            <div class="detail-list">
+              <div class="detail-row">
+                <i class="fa-solid fa-user-graduate"></i>
+                <div class="detail-body">
+                  <small>Role</small>
+                  <strong>OJT Trainee</strong>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <i class="fa-solid fa-store"></i>
+                <div class="detail-body">
+                  <small>Organization</small>
+                  <strong>SETC Computer Parts and Accessories Trading</strong>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <i class="fa-solid fa-calendar-days"></i>
+                <div class="detail-body">
+                  <small>Period</small>
+                  <strong>August 19, 2025 &ndash; January 12, 2026</strong>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <i class="fa-solid fa-location-dot"></i>
+                <div class="detail-body">
+                  <small>Location</small>
+                  <div class="map-row">
+                    <p>SETC Computer Center, Lucena City, Quezon</p>
+                    <a class="action-btn" href="https://www.google.com/maps/search/?api=1&amp;query=SETC+Computer+Center+Lucena" target="_blank" rel="noopener noreferrer">
+                      <i class="fa-solid fa-map-location-dot"></i> Open in Google Maps
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+                <!-- Skills & Expertise -->
+        <details class="acc" name="portfolio" id="skills">
+          <summary class="acc-summary">
+            <div class="icon-box"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="acc-text">
+              <span class="acc-kicker">Capabilities</span>
+              <h3>Skills &amp; Expertise</h3>
+              <p class="acc-brief">Network monitoring, ISP escalation, hardware troubleshooting, asset inventory, technical documentation, and web design</p>
+            </div>
+            <span class="acc-toggle"><i class="fa-solid fa-chevron-down"></i></span>
+          </summary>
+
+          <div class="acc-body">
+            <p class="acc-lead">A blend of hands-on technical support, well-documented operations, and clean, modern web design.</p>
+
+            <div class="skill-grid">
+              <div class="skill-item"><i class="fa-solid fa-tower-broadcast"></i> Network Monitoring</div>
+              <div class="skill-item"><i class="fa-solid fa-headset"></i> ISP Escalation</div>
+              <div class="skill-item"><i class="fa-solid fa-screwdriver-wrench"></i> Hardware Troubleshooting</div>
+              <div class="skill-item"><i class="fa-solid fa-boxes-stacked"></i> Asset Inventory</div>
+              <div class="skill-item"><i class="fa-solid fa-file-lines"></i> Technical Documentation</div>
+              <div class="skill-item"><i class="fa-solid fa-pen-ruler"></i> Web Designer</div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. EDUCATION & CERTIFICATIONS ============ -->
+  <section id="education" class="section-alt">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"><i class="fa-solid fa-graduation-cap"></i> Education &amp; Certifications</span>
+        <h2>Academic foundation</h2>
+        <p>Formal education and professional training behind my technical skills.</p>
+      </div>
+
+      <div class="accordion-stack reveal">
+        <details class="acc" name="portfolio" id="education-details">
+          <summary class="acc-summary">
+            <div class="icon-box"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="acc-text">
+              <span class="acc-kicker">Academic &amp; Professional</span>
+              <h3>Education &amp; Certifications</h3>
+              <p class="acc-brief">BS Information Technology, Secondary Education, and Google Cloud Platform Training</p>
+            </div>
+            <span class="acc-toggle"><i class="fa-solid fa-chevron-down"></i></span>
+          </summary>
+
+          <div class="acc-body">
+            <h4 class="sub-heading"><i class="fa-solid fa-book-open"></i> Education</h4>
+            <div class="timeline" style="margin-bottom: 30px;">
+              <div class="timeline-item">
+                <div class="icon-box"><i class="fa-solid fa-university"></i></div>
+                <div class="item-body">
+                  <h5>BS Information Technology</h5>
+                  <p>Colegio de Santo Cristo de Burgos</p>
+                  <span class="year-chip"><i class="fa-solid fa-calendar"></i> 2022 &ndash; 2026</span>
+                  <div class="item-actions">
+                    <a class="action-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Colegio+de+Santo+Cristo+de+Burgos+Sariaya" target="_blank" rel="noopener noreferrer">
+                      <i class="fa-solid fa-map-location-dot"></i> Open in Google Maps
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="icon-box"><i class="fa-solid fa-school"></i></div>
+                <div class="item-body">
+                  <h5>Secondary Education (TVL Track)</h5>
+                  <p>Lutucan Integrated National High School</p>
+                  <span class="year-chip"><i class="fa-solid fa-calendar"></i> 2016 &ndash; 2022</span>
+                  <div class="item-actions">
+                    <a class="action-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Lutucan+Integrated+National+High+School" target="_blank" rel="noopener noreferrer">
+                      <i class="fa-solid fa-map-location-dot"></i> Open in Google Maps
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="sub-heading"><i class="fa-solid fa-certificate"></i> Certifications</h4>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="icon-box"><i class="fa-brands fa-google"></i></div>
+                <div class="item-body">
+                  <h5>Google Cloud Platform Training</h5>
+                  <p>Certificate of training completion</p>
+                  <span class="year-chip"><i class="fa-solid fa-calendar"></i> November 4, 2026</span>
+                  <div>
+                    <button type="button" class="cert-link" data-open-cert>
+                      <i class="fa-solid fa-award"></i> View Certificate
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. CONTACT, SOCIAL LINKS & FOOTER ============ -->
+  <footer class="contact" id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"><i class="fa-solid fa-address-book"></i> Get in Touch</span>
+        <h2>Let's connect</h2>
+        <p>Reach out about network monitoring, IT operations, or technical support opportunities.</p>
+      </div>
+
+      <div class="contact-grid reveal">
+        <div class="contact-card">
+          <div class="contact-head">
+            <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <small>Email</small>
+              <h3>markdtjvn@gmail.com</h3>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="mailto:markdtjvn@gmail.com" class="chip-btn">
+              <i class="fa-solid fa-paper-plane"></i> Send Email
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-head">
+            <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <small>Viber / Phone</small>
+              <h3>09566048600</h3>
+            </div>
+          </div>
+          <div class="contact-actions">
+            
+            <a href="viber://chat?number=%2B639566048600" class="chip-btn">
+              <i class="fa-brands fa-viber"></i> Viber
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social & professional links -->
+      <div class="social-block reveal">
+        <p class="social-title">Find me online</p>
+        <div class="social-row">
+                    <a href="https://github.com/markjavina1006-bit" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub profile">
+            <i class="fa-brands fa-github"></i> GitHub
+          </a>
+          <a href="https://web.facebook.com/sephji.jvn" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook profile">
+            <i class="fa-brands fa-facebook-f"></i> Facebook
+          </a>
+                    <a href="https://instagram.com/seph.jvn/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram profile">
+            <i class="fa-brands fa-instagram"></i> Instagram
+          </a>
+                      <a href="https://x.com/sephjii" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="X (Twitter) profile">
+            <svg class="x-icon" viewBox="0 0 512 512" aria-hidden="true">
+              <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+            </svg> 
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span><i class="fa-regular fa-copyright"></i> 2026 Mark Joseph D. Javiña. All rights reserved.</span>
+        <span><i class="fa-solid fa-microchip"></i> Information Technologist &amp; IT Professional</span>
+      </div>
+    </div>
+  </footer>
+
+    <!-- ============ CERTIFICATE MODAL ============ -->
+  <div class="modal" id="certModal" role="dialog" aria-modal="true" aria-labelledby="certTitle" hidden>
+    <div class="modal-backdrop" data-close-cert></div>
+
+    <div class="modal-dialog">
+      <button type="button" class="modal-close" data-close-cert aria-label="Close certificate">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-head">
+        <div class="icon-box"><i class="fa-brands fa-google"></i></div>
+        <div>
+          <small>Certificate of Training</small>
+          <h3 id="certTitle">Google Cloud Platform Training</h3>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="zoom-stage" id="certStage">
+          <img id="certImg" alt="Google Cloud Platform Training certificate of Mark Joseph De Torres Javiña" hidden />
+        </div>
+
+        <div class="modal-missing" id="certMissing" hidden>
+          <i class="fa-solid fa-file-circle-exclamation"></i>
+          <p>The certificate image could not be loaded. Place the file below in the same folder as <code>index.html</code>:</p>
+          <code>gcp-cert.jpg.png</code>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <div class="zoom-controls">
+          <button type="button" class="action-btn" data-zoom="out" data-zoom-target="cert" aria-label="Zoom out">
+            <i class="fa-solid fa-magnifying-glass-minus"></i>
+          </button>
+          <span class="zoom-label" id="certZoomLabel">100%</span>
+          <button type="button" class="action-btn" data-zoom="in" data-zoom-target="cert" aria-label="Zoom in">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </button>
+          <button type="button" class="action-btn" data-zoom="reset" data-zoom-target="cert" aria-label="Reset zoom">
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
+        </div>
+
+        <button type="button" class="action-btn" data-close-cert>
+          <i class="fa-solid fa-xmark"></i> Close
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Skills video transition -->
+<div class="video-transition" id="videoTransition" aria-hidden="true">
+  <video id="transitionVideo" src="224513-bw.mp4" muted playsinline preload="auto"></video>
+</div>
+  <script src="script.js"></script>
+</body>
+</html>
